@@ -2,10 +2,10 @@
   <div class="col-3 my-3 " id='tempid'>
     <!-- img 태그에 src와 alt값(영화제목)을 설정하시오 -->
     <div class="max-w-sm rounded overflow-hidden shadow-lg text-center">
-      <img class="movie--poster my-3" v-bind:src="movie.poster_url"  alt="movie.name"/>
+      <img class="movie--poster my-3" :src="movie.poster_url"  :alt="movie.title"/>
       <div class="px-6 py-4">
-        <div class="font-bold text-xl mb-2">{{movie.name}}</div>
-        <button class="btn btn-primary" data-toggle="modal" :data-target="'#movie'+movie.id">영화 정보 상세보기</button>
+        <div class="font-bold text-xl mb-2">{{movie.title}}</div>
+        <button :id="'btn' + movie.id" class="btn btn-sm btn-info" data-toggle="modal" :data-target="'#movie' + movie.id">상세보기</button>
       </div>
     </div>
     <MovieListItemModal :movie="movie"/>
@@ -14,7 +14,9 @@
 
 <script>
 // 1-1. 저장되어 있는 MovieListItemModal 컴포넌트를 불러오고,
+// import axios from 'axios'
 import MovieListItemModal from './MovieListItemModal.vue'
+
 export default {
   name: 'MovieListItem',
   // 1-2. 아래에 등록 후
@@ -29,12 +31,6 @@ export default {
     movie: Object,
   },
 
-  data () {
-    // 활용할 데이터를 정의하시오.
-    return {
-
-    }
-  }
 }
 
 </script>

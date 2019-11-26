@@ -12,9 +12,7 @@
     </select>
     
     <div class="row">
-    
-      <MovieListItem v-for="movie in computedGenreId" v-bind:key="movie.id" :movie="movie"/>
-
+      <MovieListItem v-for="movie in movies" v-bind:key="movie.id" :movie="movie"/>
     </div>
     
   </div>
@@ -47,7 +45,6 @@ export default {
     },
     movies: {
       type:Array,
-      
     }
   },
   computed:{

@@ -2,19 +2,20 @@
 <!-- vue 콘솔에서 확인하여, 추가 정보들도 출력하세요. -->
 <!-- 고유한 모달을 위해 id 속성을 정의하시오. 예) movie-1, movie-2, ... -->
 <!-- v-bind:id movie.id 에러가 -->
-<div class="modal fade" :id="'movie'+movie.id" tabindex="-1" role="dialog">
+<div class="modal fade" :id="'movie'+movie_detail.id" tabindex="-1" role="dialog">
+
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <!-- 영화 제목을 출력하세요. -->
-        <h5 class="modal-title">{{movie.name}}</h5>
+        <h5 class="modal-title">{{movie_detail.title}}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <!-- 영화 설명을 출력하세요. -->
-        <p>{{movie.description}}</p>
+        <p>{{movie_detail.description}}</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -25,7 +26,10 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
+
   name: 'movie-list-item-modal',
   // 0. props 데이터를 받이 위하여 설정하시오.
   // movie 타입은 Object이며, 필수입니다.
@@ -33,6 +37,18 @@ export default {
   // 그리고 적절한 곳에 사용하세요.
   props:{
     movie: Object
+  },
+  data(){
+    return {
+      movie_detail: ''
+    }
+  },
+  mounted(){
+    const MOVIE_DETAIL_URL = 'http://127.0.0.1:8000/api/v1/movies/'
+    console.log(MOVIE_DETAIL_URL + this.movie.id)
+    axios.get(MOVIE_DETAIL_URL + this.movie.id)
+      .then(res => this.movie_detail = res.data)
+      .catch(err => console.log(err))
   }
 }
 </script>

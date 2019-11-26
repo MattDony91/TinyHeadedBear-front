@@ -82,6 +82,7 @@ export default {
     const MOVIE_LIST_URL = 'http://127.0.0.1:8000/api/v1/movies/'
     axios.get(MOVIE_LIST_URL)
     .then((res)=> {
+      console.log(typeof(res.data))
       console.log(res.data)
       this.movies = res.data
     })
