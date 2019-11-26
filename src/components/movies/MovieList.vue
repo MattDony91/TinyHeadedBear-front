@@ -6,13 +6,16 @@
     <h1>영화 목록</h1>
 
     <select class="form-control" v-model="selectedGenreId">
-      <option v-for="genre in genres" v-bind:key="genre.id" :value="genre.id">
-        {{genre.name}}
+      <option value="">
+        전체보기
+      </option>
+      <option v-for="genre in genres" :key="genre.id" :value="genre.id">
+        {{genre.title}}
       </option>
     </select>
     
     <div class="row card-deck  justify-content-between">
-      <MovieListItem v-for="movie in movies" v-bind:key="movie.id" :movie="movie"/>
+      <MovieListItem v-for="movie in computedGenreId" v-bind:key="movie.id" :movie="movie"/>
     </div>
     
   </div>
@@ -31,7 +34,7 @@ export default {
     return {
       // 활용할 데이터를 정의하시오.
       selectedGenreId: '',
-  
+      temp_arr: []
     }
   },
   // 0. props 데이터를 받이 위하여 설정하시오.
@@ -48,15 +51,21 @@ export default {
     }
   },
   computed:{
-    computedGenreId(){
-      if (this.selectedGenreId === ''){
-          return this.movies
-        } else {
-          return this.movies.filter(movie => movie.genre_id === this.selectedGenreId)
+    computedGenreId() {
+      if (!this.selectedGenreId){
+        return this.movies
+      }
+      const movie_list = []
+      for (let movie of this.movies) {
+        for (let genre of movie.genres) {
+          if (genre.id === this.selectedGenreId) {
+            movie_list.push(movie)
+          }
         }
+      }
+      return movie_list
     }
   }
-  
 }
 </script>
 
