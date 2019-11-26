@@ -11,7 +11,7 @@
       </option>
     </select>
     
-    <div class="row">
+    <div class="row card-deck  justify-content-between">
       <MovieListItem v-for="movie in movies" v-bind:key="movie.id" :movie="movie"/>
     </div>
     

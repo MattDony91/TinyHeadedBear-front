@@ -51,11 +51,9 @@ export default {
         axios.post('http://localhost:8000/api-token-auth/', this.credential)
           .then(response => {
             this.loading = true
-            // let user = JSON.parse(response.config.data)
-            // console.log(user.username)
+
             response.data.token
-            // if (user.username == 'admin'){동일하게 하는데 } 
-        
+
             this.$session.start()
             this.$session.set('jwt', response.data.token) // 저장을 한다.
             router.push('/')

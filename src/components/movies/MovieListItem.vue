@@ -1,13 +1,13 @@
 <template>
-  <div class="col-3 my-3 " id='tempid'>
-    <!-- img 태그에 src와 alt값(영화제목)을 설정하시오 -->
-    <div class="max-w-sm rounded overflow-hidden shadow-lg text-center">
-      <img class="movie--poster my-3" :src="movie.poster_url"  :alt="movie.title"/>
-      <div class="px-6 py-4">
-        <div class="font-bold text-xl mb-2">{{movie.title}}</div>
+  <div class="my-3 col-3" id='tempid'>
+    <div class="card">
+      <img :src="movie.poster_url"  :alt="movie.title" class="card-img-top">
+      <div class="card-body">
+        <h5 class="card-title">{{movie.title}}</h5>
         <button :id="'btn' + movie.id" class="btn btn-sm btn-info" data-toggle="modal" :data-target="'#movie' + movie.id">상세보기</button>
       </div>
     </div>
+    <!-- img 태그에 src와 alt값(영화제목)을 설정하시오 -->
     <MovieListItemModal :movie="movie"/>
   </div>
 </template>
