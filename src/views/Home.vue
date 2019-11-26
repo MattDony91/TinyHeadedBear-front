@@ -15,9 +15,15 @@ import MovieList from '../components/movies/MovieList.vue'
 
 export default {
   name: 'home',
+
   components: {
-    MovieList
+    MovieList,
   },
+  // props: {
+  //   check: {
+  //     type: String 
+  //   },
+  // },
   computed:{
     // 구조를 분해하는 문법
     ...mapGetters([
