@@ -11,8 +11,9 @@
           <div v-if="isAuthenticated" class="row align-items-center">
             <a href="#" @click.prevent="logout">logout</a>
             <router-link class="nav-link" to="/mypage">mypage</router-link>
+            <a href="http://localhost:8000/admin">관리자 페이지</a>
           </div>
-          <div v-else>
+          <div v-else class="row">
             <li class="nav-item">
               <router-link class="nav-link" to="/signup">SignUp</router-link>
             </li>

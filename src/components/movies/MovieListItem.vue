@@ -7,18 +7,7 @@
         <div class="font-bold text-xl mb-2">{{movie.name}}</div>
         <button class="btn btn-primary" data-toggle="modal" :data-target="'#movie'+movie.id">영화 정보 상세보기</button>
       </div>
-      <!-- <div class="px-6 py-4">
-        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#photography</span>
-        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#travel</span>
-        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">#winter</span>
-      </div> -->
     </div>
-   
-    <!-- 모달을 활용하기 위해서는 data-taget에 모달에서 정의된 id값을 넣어야 합니다. -->
-    
-    <!-- 1-3. 호출하시오.
-      필요한 경우 props를 데이터를 보내줍니다.
-      -->
     <MovieListItemModal :movie="movie"/>
   </div>
 </template>
