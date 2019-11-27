@@ -44,11 +44,12 @@
           <button class="btn btn-info btn-sm col-1" @click="reviewCreate">📝</button>
         </li>
         <!-- <li>{{movie_detail.review_set.reverse()}}</li> -->
-        <li class="list-group-item d-flex flex-row m-0 p-0 row" v-for="review in movie_detail.review_set" :key="review.id">
+        <li class="list-group-item d-flex flex-row m-0 px-0 py-2 row" v-for="review in movie_detail.review_set" :key="review.id">
           <span class="col-2 text-center">{{review.score}}</span>
           <span class="col">{{review.comment}}
             <span v-if="review.user.id === user_info.user_id">
-              <button class="btn btn-warning btn-sm">EDI</button>
+              <button class="btn btn-warning btn-sm" @click="showInput(review)">EDI</button>
+              <!-- <button :id="'btn' + movie.id" class="btn btn-sm btn-info" data-toggle="modal" :data-target="'#movie' + movie.id">상세보기</button> -->
               <button class="btn btn-danger btn-sm" @click="reviewDelete(review)">DEL</button>
             </span>
           </span>
@@ -124,8 +125,6 @@ export default {
 
       axios.post(REVIEW_CREATE_URL, requestForm, requestHeader)
         .then((res)=> {
-          // console.log(res.data)
-          // console.log(this.movie_detail)
           this.movie_detail.review_set.unshift(res.data)
           this.score = ''
           this.comment = ''
@@ -151,7 +150,11 @@ export default {
           }
         })
         .catch(err => console.log(err))
-    }
+    },
+    showInput(review) {
+      console.log('창 뜰까??')
+      prompt('수정할 내용을 입력해주세요', review.comment)
+    },
   },
 }
 </script>

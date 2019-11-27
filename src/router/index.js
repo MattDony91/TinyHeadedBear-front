@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import SignUp from '../views/SignUp.vue'
 import Login from '../views/Login.vue'
 import MyPage from '../views/MyPage.vue'
+import Movie from '../views/Movie.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,12 @@ const routes = [
     path: '/mypage',
     name: 'mypage',
     component: MyPage
+  },
+  {
+    path: '/movie',
+    name: 'movie',
+    component: Movie,
+    props: true
   }
 ]
 
