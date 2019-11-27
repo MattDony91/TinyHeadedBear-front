@@ -26,27 +26,34 @@
             <p>개요
               <span v-if="movie_detail.open_date != '정보없음'">| {{movie_detail.open_date}} </span>
               <span v-if="movie_detail.running_time != '정보없음'">| {{movie_detail.running_time}} </span>
-              <!-- <span v-if="movie_detail.watch_grade.watch_grade != '정보없음'">| {{movie_detail.watch_grade.watch_grade}} </span> -->
+              <!-- <span v-if="movie_detail.watch_grade != '정보없음'">| {{movie_detail.watch_grade.watch_grade}} </span> -->
             </p>
-            <p>감독 <span v-for="director in movie_detail.directors" :key="director.id">| {{director.name}}</span></p>
-            <p>출연 <span v-for="actor in movie_detail.actors" :key="actor.id">| {{actor.name}}</span></p>
+            <p>감독 <span v-for="director in movie_detail.directors" :key="director.id">| {{director.name}} </span></p>
+            <p>출연 <span v-for="actor in movie_detail.actors" :key="actor.id">| {{actor.name}} </span></p>
             <p>누적관객 <span>| {{movie_detail.audience}}</span></p>
             <hr>
             <p>{{movie_detail.description}}</p>
           </div>
         </div>
       </div>
-      <!-- <div class="modal-footer">
-        
-      </div> -->
       
       <ul class="list-group">
         <li class="list-group-item d-flex flex-row align-items-stretch m-0 p-0 row">
           <input class="flex-fill col-2" type="number" placeholder="평점" v-model="score">
           <input class="flex-fill col-9" type="text" placeholder="리뷰를 남겨주세요." v-model="comment">
-          <button class="btn btn-info btn-sm col-1" @click="create_review">📝</button>
+          <button class="btn btn-info btn-sm col-1" @click="reviewCreate">📝</button>
         </li>
-        <li class="list-group-item" v-for="review in movie_detail.review_set" :key="review.id">{{review.score}} | {{review.comment}}</li>
+        <!-- <li>{{movie_detail.review_set.reverse()}}</li> -->
+        <li class="list-group-item d-flex flex-row m-0 p-0 row" v-for="review in movie_detail.review_set" :key="review.id">
+          <span class="col-2 text-center">{{review.score}}</span>
+          <span class="col">{{review.comment}}
+            <span v-if="review.user.id === user_info.user_id">
+              <button class="btn btn-warning btn-sm">EDI</button>
+              <button class="btn btn-danger btn-sm" @click="reviewDelete(review)">DEL</button>
+            </span>
+          </span>
+          <span class="col-2 text-right">{{review.user.username}}</span>
+        </li>
       </ul>
 
       
@@ -76,44 +83,76 @@ export default {
       movie_detail: '',
       comment: '',
       score: '',
+      user_info: {
+        token: '',
+        user_id: '',
+        username: '',
+      }
     }
   },
-  mounted(){
+  mounted() {
     const MOVIE_DETAIL_URL = 'http://127.0.0.1:8000/api/v1/movies/'
     axios.get(MOVIE_DETAIL_URL + this.movie.id)
       .then(res => {
-      this.movie_detail = res.data})
+      this.movie_detail = res.data
+      this.movie_detail.review_set.reverse()
+      })
       .catch(err => console.log(err))
+
+    this.$session.start()
+    if (this.$session.get('jwt')) {
+      this.user_info.token = this.$session.get('jwt')
+      const decodedToken = jwtDecode(this.user_info.token)
+      this.user_info.user_id = decodedToken.user_id
+      this.user_info.username = decodedToken.username
+    }
   },
   methods: {
-    create_review(){
-      this.$session.start()
-      const token = this.$session.get('jwt')
-      const decodedToken = jwtDecode(token)
-      const user_id = decodedToken.user_id
+    reviewCreate(){
+      const REVIEW_CREATE_URL = `http://localhost:8000/api/v1/movies/${this.movie.id}/review/create/`
+
       const requestHeader = {
         headers: {
-          Authorization: `JWT ${token}`
+          Authorization: `JWT ${this.user_info.token}`
         }
       }
-      // console.log(requestHeader)
-      const REVIEW_URL = `http://localhost:8000/api/v1/movies/${this.movie.id}/review/create/`
+
       const requestForm = new FormData()
-      requestForm.append('user', user_id)
+      requestForm.append('user', this.user_info.user_id)
       requestForm.append('score', this.score)
       requestForm.append('comment', this.comment)
 
-      axios.post(REVIEW_URL, requestForm, requestHeader)
+      axios.post(REVIEW_CREATE_URL, requestForm, requestHeader)
         .then((res)=> {
-          console.log(res.data)
-          console.log(this.movie_detail)
-          this.movie_detail.review_set.push(res.data)
+          // console.log(res.data)
+          // console.log(this.movie_detail)
+          this.movie_detail.review_set.unshift(res.data)
           this.score = ''
           this.comment = ''
           })
         .catch((err)=>{console.log(err)})
+    },
+    reviewDelete(review) {
+      const requestHeader = {
+        headers: {
+          Authorization: `JWT ${this.user_info.token}`
+        }
+      }
+      const REVIEW_DETAIL_URL = `http://localhost:8000/api/v1/movies/${this.movie.id}/review/${review.id}/`
+      axios.delete(REVIEW_DETAIL_URL, requestHeader)
+        .then(res => {
+          console.log(res)
+          const targetReview = this.movie_detail.review_set.find(function (el) {
+            return el === review
+          })
+          const idx = this.movie_detail.review_set.indexOf(targetReview)
+          if (idx != -1) {
+            this.movie_detail.review_set.splice(idx, 1)
+          }
+        })
+        .catch(err => console.log(err))
     }
-  }
+  },
 }
 </script>
 
