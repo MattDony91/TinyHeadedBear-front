@@ -4,7 +4,8 @@
       <span>
         
       </span>
-      <img :src="movie.poster_url" :class="{active:hover}" :alt="movie.title" class="card-img-top" @mouseover="hover= true" @mouseleave="hover=false">
+      <img :src="movie.poster_url" id="image" :class="{active:hover}" :alt="movie.title" class="card-img-top">
+       <!-- @mouseover="hover= true" @mouseleave="hover=false" -->
       <div class="card-body">
         <h5 class="card-title">{{movie.title}}</h5>
         <router-link class="btn btn-sm btn-info" :to="{name: 'movie', params: {movie}}">상세보기</router-link>
@@ -37,7 +38,7 @@ export default {
 .card {
   position: relative;
 }
-img{
+#image{
   -webkit-transform:scale(1);
   -moz-transform:scale(1);
   -ms-transform:scale(1); 
@@ -51,7 +52,7 @@ img{
   opacity: 1;
   transition: .5s ease;
 }
-img:hover {
+#image:hover {
    -webkit-transform:scale(1.2);
     -moz-transform:scale(1.2);
     -ms-transform:scale(1.2);   

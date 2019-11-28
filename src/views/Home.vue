@@ -1,14 +1,11 @@
 <template>
   <div class="home">
     <div class="my-5">
-      <div class="row">
-        <div class="col">
-          <BoxOffice/>
-        </div>
-        <div class="col">
-          <ThumsupMovie/>
-        </div>
-      </div>
+     
+        
+      <ThumsupMovie/>
+    
+  
       <MovieList :movies="movies" :genres="genres"/>
     </div>
   </div>
@@ -18,7 +15,6 @@
 // @ is an alias to /src
 import axios from 'axios'
 import MovieList from '../components/movies/MovieList.vue'
-import BoxOffice from '../components/movies/BoxOffice.vue'
 import ThumsupMovie from '../components/movies/ThumsupMovie.vue'
 
 export default {
@@ -26,7 +22,6 @@ export default {
 
   components: {
     MovieList,
-    BoxOffice,
     ThumsupMovie,
   },
   data() {

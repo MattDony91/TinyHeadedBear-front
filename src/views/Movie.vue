@@ -3,7 +3,7 @@
     <!-- 영화 상세정보 -->
     <div class="row ">
       <div class="col-5 text-center ml-3" style="padding-right: 0;">
-        <img width="90%" :src="movie_detail.poster_url" alt="">
+        <img width="90%" :src="movie_detail.poster_url" alt="" :class="{active:hover}">
       </div>
       <div class="col-6" style="vertical-align: middle; padding-left: 0;">
         <div class="mr-3">
@@ -96,7 +96,8 @@ export default {
         token: '',
         user_id: '',
         username: '',
-      }
+      },
+      hover:false
     }
   },
   mounted() {

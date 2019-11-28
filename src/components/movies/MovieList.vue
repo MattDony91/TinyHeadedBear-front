@@ -1,9 +1,10 @@
 <template>
   <div class="">
-    
-    <h1>영화 목록</h1>
+    <hr class="mt-3">
+    <div class="row align-items-center text-center ">
+      <h1 class="my-5 ml-5"> 🎥 Film List 🍿 </h1>
 
-    <select class="form-control" v-model="selectedGenreId">
+      <select class="form-control" v-model="selectedGenreId">
       <option value="">
         전체보기
       </option>
@@ -11,6 +12,8 @@
         {{genre.title}}
       </option>
     </select>
+    </div>
+    
     
     <div class="row card-deck  justify-content-between">
       <MovieListItem v-for="movie in computedGenreId" :key="movie.id" :movie="movie"/>

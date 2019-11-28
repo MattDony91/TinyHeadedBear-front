@@ -1,9 +1,9 @@
 <template>
-  <div class="thums-up">
+  <div class="thums-up " style="position: relative;">
     <ul class="list-group">
-      <div class="row p-0">
+      <div class="row d-flex" style="">
         <div class="col-4 m-0 p-0">
-          <img :src="mouseover_url" alt="">
+          <img :src="mouseover_url" alt="" style="min-height:30px; max-height:490px;  vertical-align: center;">
         </div>
         <div class="col m-0 p-0">
           <li class="list-group-item" v-for="movie in movie_list" :key="movie.id" @mouseover="mouseoverPoster(movie.poster_url)">
@@ -14,11 +14,11 @@
     </ul>
   </div>
 </template>
-​
+
 <script>
 import axios from 'axios'
 import jwtDecode from 'jwt-decode'
-​
+
 export default {
   name: 'ThumsupMovie',
   data(){
@@ -36,7 +36,7 @@ export default {
   mounted(){
     // 로그인 상태를 확인(로그인 유무에 따라 추천영화가 다름)
     const RECOMMENDED_URL = `http://localhost:8000/api/v1/movies/recommended/`
-​
+
     this.$session.start()
     if (this.$session.get('jwt')) {
       this.login_check = true
@@ -57,7 +57,7 @@ export default {
         .catch(err => console.log(err))
     } else {
       this.login_check = false
-​
+
       axios.get(RECOMMENDED_URL)
         .then(res => {
           this.movie_list = res.data
@@ -73,6 +73,9 @@ export default {
   }
 }
 </script>
-​
+
 <style>
+.col {
+  flex: 1;
+}
 </style>

@@ -34,7 +34,7 @@
       </div>
     </nav>
 
-    <div class="container">
+    <div class="container my-4">
       <router-view/>
     </div>
   <go-top></go-top>
