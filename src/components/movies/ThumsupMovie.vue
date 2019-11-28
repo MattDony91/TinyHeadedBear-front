@@ -1,12 +1,13 @@
 <template>
   <div class="thums-up " style="position: relative;">
+    <h1 class="my-5">The Best Movie for You! 😉</h1>
     <ul class="list-group">
       <div class="row d-flex" style="">
         <div class="col-4 m-0 p-0">
-          <img :src="mouseover_url" alt="" style="min-height:30px; max-height:490px;  vertical-align: center;">
+          <img :src="mouseover_url" alt="" style="min-height:490px; max-height:490px; max-width:350px; min-width:350px; display:table-cell; vertical-align:middle;">
         </div>
         <div class="col m-0 p-0">
-          <li class="list-group-item" v-for="movie in movie_list" :key="movie.id" @mouseover="mouseoverPoster(movie.poster_url)">
+          <li class="list-group-item list-group-item-action" v-for="movie in movie_list" :key="movie.id" @mouseover="mouseoverPoster(movie.poster_url)">
             <router-link :to="{name: 'movie', params: {movie}}">{{movie.title}}({{movie.subtitle}})</router-link>
           </li>
         </div>
@@ -30,7 +31,10 @@ export default {
         token: '',
         user_id: '',
         username: '',
-      }
+      },
+
+        colors:'black',
+
     }
   },
   mounted(){
@@ -67,9 +71,13 @@ export default {
     }
   },
   methods: {
-    mouseoverPoster(poster_url) {
-      this.mouseover_url = poster_url
-    }
+    // change() {
+    //   if (this.colors !== 'black'){
+    //     this.colors ="black"
+    //   } else {
+    //     this.colors = 'blue'
+    //   }
+    // }
   }
 }
 </script>

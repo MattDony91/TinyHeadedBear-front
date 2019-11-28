@@ -1,14 +1,16 @@
 <template>
   <div class="my-3 col-3" id='tempid'>
-    <div class="card">
-      <span>
-        
-      </span>
-      <img :src="movie.poster_url" id="image" :class="{active:hover}" :alt="movie.title" class="card-img-top">
-       <!-- @mouseover="hover= true" @mouseleave="hover=false" -->
-      <div class="card-body">
-        <h5 class="card-title">{{movie.title}}</h5>
-        <router-link class="btn btn-sm btn-info" :to="{name: 'movie', params: {movie}}">상세보기</router-link>
+    <div class="card" style="position: relative;">
+      <div style="vertical-align: middle;" class="text-center">
+      <router-link class="btn btn-sm" :to="{name: 'movie', params: {movie}}">
+      <img :src="movie.poster_url" id="image" :class="{active:hover}" :alt="movie.title" class="card-img-top" style="min-height:300px; max-height:300px; "  @mouseover="visible = !visible" @mouseleave="visible = !visible">
+      </router-link>
+      </div>
+      
+      <!-- @mouseover="hover= true" @mouseleave="hover=false" -->
+      <!-- :@mouseover="{visibility:'hiidden'}" :@mouseleave="{display:'visible'} -->
+      <div id="title" class="card-body" style="position:absolute; top:50%;left:50% text-align:center; padding: 5px 10px;">
+        <h5 class="card-title text-center mr-5" v-if="visible">🎄 {{movie.title}}</h5>
       </div>
     </div>
   </div>
@@ -24,6 +26,12 @@ export default {
   data(){
     return {
       hover: false,
+      visible:false
+    }
+  },
+  methods: {
+    doMouseOver(){
+
     }
   }
 
@@ -58,9 +66,14 @@ export default {
     -ms-transform:scale(1.2);   
     -o-transform:scale(1.2);
     transform:scale(1.2);
-    opacity: 0.7;
+    opacity: 0.2;
     transition: .5s ease;
 }
+.card-title {
+  font-weight: bold;
+
+}
+
 
 
 </style>

@@ -2,16 +2,16 @@
   <div id="app">
     
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <router-link class="navbar-brand" to="/" ><i class="fas fa-paw ml-4" style="height:30px;"></i></router-link>
+      <router-link class="navbar-brand" to="/" ><i class="fas fa-paw ml-4" style="height:30px;"> 작대곰</i></router-link>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse nav" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <div v-if="isAuthenticated" class="row align-items-center">
-            <a href="#" @click.prevent="logout">logout</a>
-            <router-link class="nav-link" to="/mypage">mypage</router-link>
-            <a href="http://localhost:8000/admin">관리자 페이지</a>
+            <a href="#" @click.prevent="logout">Logout</a>
+            <!-- <router-link class="nav-link" to="/mypage">mypage</router-link> -->
+            <a href="http://localhost:8000/admin" class="ml-3">관리자 페이지</a>
           </div>
           <div v-else class="row">
             <li class="nav-item">

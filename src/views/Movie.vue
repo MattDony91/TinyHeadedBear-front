@@ -3,15 +3,17 @@
     <!-- 영화 상세정보 -->
     <div class="row ">
       <div class="col-5 text-center ml-3" style="padding-right: 0;">
-        <img width="90%" :src="movie_detail.poster_url" alt="" :class="{active:hover}">
+        <img width="90%" style="min-height:450px;" :src="movie_detail.poster_url" alt="" :class="{active:hover}">
       </div>
       <div class="col-6" style="vertical-align: middle; padding-left: 0;">
         <div class="mr-3">
           <h1 class="display-4 row align-items-center"> {{movie_detail.title}}  <h2>{{movie_detail.subtitle}}</h2></h1>
          
-          <div style=""> 개요 
-            <span v-if="movie_detail.open_date != '정보없음'">| {{movie_detail.open_date}} </span>
-            <span v-if="movie_detail.running_time != '정보없음'">| {{movie_detail.running_time}} </span>
+          <div style="">
+            <p> 개요 
+              <span v-if="movie_detail.open_date != '정보없음'">| {{movie_detail.open_date}} </span>
+              <span v-if="movie_detail.running_time != '정보없음'">| {{movie_detail.running_time}} </span>
+            </p>
             <p>감독 <span v-for="director in movie_detail.directors" :key="director.id">| {{director.name}} </span></p>
             <p>출연 <span v-for="actor in movie_detail.actors" :key="actor.id">| {{actor.name}} </span></p>
             <p>누적관객 <span>| {{movie_detail.audience}}</span></p>
@@ -20,6 +22,11 @@
                <i class="far fa-thumbs-up"></i>
               </button>
               {{movie_detail.like_users.length}}
+            </p>
+            <p>
+              평점:
+              <span v-if="movie_detail.review_set.length">{{score_average}}</span>
+              <span v-else>리뷰를 남겨주세요.</span>
             </p>
             
           </div>
@@ -92,6 +99,7 @@ export default {
       score:'',
       comment:'',
       movie_detail: '',
+      score_average: '',
       user_info: {
         token: '',
         user_id: '',
@@ -113,8 +121,11 @@ export default {
       .then(res => {
         this.movie_detail = res.data
         this.movie_detail.review_set.reverse()
+        this.getScoreAvg()
       })
       .catch(err => console.log(err))
+
+    
 
     this.$session.start()
     if (this.$session.get('jwt')) {
@@ -128,6 +139,15 @@ export default {
     }
   },
   methods: {
+    getScoreAvg() {
+      if (this.movie_detail.review_set) {
+        let score_sum = 0
+        for (let review of this.movie_detail.review_set) {
+          score_sum += review.score
+        }
+        this.score_average = score_sum / this.movie_detail.review_set.length
+      }
+    },
     reviewCreate(){
       const REVIEW_CREATE_URL = `http://localhost:8000/api/v1/movies/${this.movie_detail.id}/review/create/`
 
@@ -144,6 +164,7 @@ export default {
       axios.post(REVIEW_CREATE_URL, requestForm, requestHeader)
         .then((res)=> {
           this.movie_detail.review_set.unshift(res.data)
+          this.getScoreAvg()
           this.score = ''
           this.comment = ''
           })
@@ -165,6 +186,7 @@ export default {
           const idx = this.movie_detail.review_set.indexOf(targetReview)
           if (idx != -1) {
             this.movie_detail.review_set.splice(idx, 1)
+            this.getScoreAvg()
           }
         })
         .catch(err => console.log(err))
@@ -192,8 +214,10 @@ export default {
           })
           const idx = this.movie_detail.review_set.indexOf(targetReview)
           if (idx != -1) {
-            this.movie_detail.review_set[idx].score = edit_score
-            this.movie_detail.review_set[idx].comment = edit_comment 
+            this.movie_detail.review_set[idx].score = Number(edit_score)
+            console.log(this.movie_detail.review_set)
+            this.movie_detail.review_set[idx].comment = edit_comment
+            this.getScoreAvg()
           }
         })
         .catch(err => console.log(err))
