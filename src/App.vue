@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <router-link class="navbar-brand" to="/" ><i class="fas fa-paw ml-4" style="height:30px;"> 작대곰</i></router-link>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-center">
+      <router-link class="navbar-brand" to="/" ><i class="fas fa-paw ml-4" style="height:30px;">작대곰</i></router-link>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>

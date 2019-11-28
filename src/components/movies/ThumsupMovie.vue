@@ -71,13 +71,9 @@ export default {
     }
   },
   methods: {
-    // change() {
-    //   if (this.colors !== 'black'){
-    //     this.colors ="black"
-    //   } else {
-    //     this.colors = 'blue'
-    //   }
-    // }
+    mouseoverPoster(poster_url) {
+      this.mouseover_url = poster_url
+    }
   }
 }
 </script>
