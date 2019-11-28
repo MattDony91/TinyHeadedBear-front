@@ -1,38 +1,39 @@
 <template>
-  <div>
-    <div v-if="loading" class="spinner-border" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-    <div v-else="" class="login-div col-6 offset-3">
-      <div v-if="errors.length" class="error-list alert alert-danger">
-        <div v-for="(error, idx) in errors" :key="idx">{{error}}</div>
-      </div>
-      <div class="form-group row">
-        <div class="col-2">
-          <label for="userID">ID</label>
-        </div>
-        <div class="col">
-          <input id="userID" class="form-control" type="text" v-model="credential.username">
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-2">
-          <label for="userPW">PW</label>
-        </div>
-        <div class="col">
-          <input id="userPW" class="form-control" type="password" v-model="credential.password">
-        </div>
-      </div>
-      <button class="btn btn-primary" @click="login">Login</button>
-    </div>
+  <div class="w-full max-w">
+  <div v-if="loading" class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
   </div>
+  <div v-else="" class="login-div col-6 offset-3">
+    <div v-if="errors.length"  class="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4" role="alert">
+      <div v-for="(error, idx) in errors" :key="idx">{{error}}</div>
+    </div>
+    <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 my-4">
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="userID">
+        Username
+      </label>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="userID" type="text" placeholder="Username" v-model="credential.username">
+    </div>
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="userPW">
+        Password
+      </label>
+      <input class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"  v-model="credential.password" id="userPW" type="password" placeholder="******************">
+      <p class="text-red-500 text-xs italic">비밀번호를 써주세요</p>
+    </div>
+    <div class="flex items-center justify-between">
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" @click="login" type="button">
+        Log In
+      </button>
+    </div>
+  </form>
+  </div>
+</div>
 </template>
-
 <script>
 import axios from 'axios'
 import router from '../router'
-// import 
-
+// import
 export default {
   name: 'LoginForm',
   data: function () {
@@ -51,10 +52,7 @@ export default {
         axios.post('http://localhost:8000/api-token-auth/', this.credential)
           .then(response => {
             this.loading = true
-
             response.data.token
-            // console.log('이것이 보고 싶은 데이타')
-            // console.log(response.data.token)
             this.$session.start()
             this.$session.set('jwt', response.data.token) // 저장을 한다.
             router.push('/')
@@ -80,12 +78,8 @@ export default {
         return true
       }
     },
-
   },
-  
 }
 </script>
-
 <style>
-
 </style>

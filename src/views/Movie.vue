@@ -39,7 +39,7 @@
         <button class="btn btn-info btn-sm col-1" @click="reviewCreate()">📝</button>
       </li>
       <li class="list-group-item d-flex flex-row m-0 px-4 py-2 row" v-for="review in this.movie_detail.review_set" :key="review.id">
-        <span class="col-2 text-center">{{review.score}}</span>
+        <span class="col-2 text-center">⭐{{review.score}}</span>
         <span class="col">
           {{review.comment}}
           <span v-if="review.user.id === user_info.user_id">
