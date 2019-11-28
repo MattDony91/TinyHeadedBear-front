@@ -53,7 +53,8 @@ export default {
             this.loading = true
 
             response.data.token
-
+            // console.log('이것이 보고 싶은 데이타')
+            // console.log(response.data.token)
             this.$session.start()
             this.$session.set('jwt', response.data.token) // 저장을 한다.
             router.push('/')

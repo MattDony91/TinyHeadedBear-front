@@ -13,7 +13,7 @@
     </select>
     
     <div class="row card-deck  justify-content-between">
-      <MovieListItem v-for="movie in computedGenreId" v-bind:key="movie.id" :movie="movie"/>
+      <MovieListItem v-for="movie in computedGenreId" :key="movie.id" :movie="movie"/>
     </div>
     
   </div>
