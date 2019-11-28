@@ -2,13 +2,13 @@
   <div class="jumbotron jumbotron-fluid my-5" style="border-radius: 5px;">
     <!-- 영화 상세정보 -->
     <div class="row ">
-      <div class="col-6 text-center" style="padding-right: 0;">
+      <div class="col-5 text-center ml-3" style="padding-right: 0;">
         <img width="90%" :src="movie_detail.poster_url" alt="">
       </div>
       <div class="col-6" style="vertical-align: middle; padding-left: 0;">
         <div class="mr-3">
-          <h1 class="display-4"> {{movie_detail.title}}</h1>
-          <p>{{movie_detail.subtitle}}</p>
+          <h1 class="display-4 row align-items-center"> {{movie_detail.title}}  <h2>{{movie_detail.subtitle}}</h2></h1>
+         
           <div style=""> 개요 
             <span v-if="movie_detail.open_date != '정보없음'">| {{movie_detail.open_date}} </span>
             <span v-if="movie_detail.running_time != '정보없음'">| {{movie_detail.running_time}} </span>
@@ -16,7 +16,9 @@
             <p>출연 <span v-for="actor in movie_detail.actors" :key="actor.id">| {{actor.name}} </span></p>
             <p>누적관객 <span>| {{movie_detail.audience}}</span></p>
             <p>
-              <button class="btn btn-primary" @click="movieLike()">추천</button>
+              <button class=" text-black font-bold " @click="movieLike()">
+               <i class="far fa-thumbs-up"></i>
+              </button>
               {{movie_detail.like_users.length}}
             </p>
             
@@ -32,7 +34,7 @@
     </div>
     <hr>
     <!-- 리뷰 관련 기능들 -->
-    <ul class="list-group">
+    <ul class="list-group" style="width:80%; margin-left:10%">
       <li class="list-group-item m-0 px-3 py-2 row">
         <input class="col-2" type="number" placeholder="평점" v-model="score">
         <input class="col-9" type="text" placeholder="리뷰를 남겨주세요." v-model="comment">
@@ -62,10 +64,7 @@
                     <input :id="'edit_comment' + review.id" class="col-9" type="text" :value="review.comment">
                     <button class="btn btn-success btn-sm col-1" data-dismiss="modal" @click="reviewUpdate(review)">📝</button>
                   </div>
-                  <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                  </div> -->
+              
                 </div>
               </div>
             </div>

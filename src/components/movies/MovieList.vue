@@ -50,13 +50,16 @@ export default {
       for (let movie of this.movies) {
         for (let genre of movie.genres) {
           if (genre.id === this.selectedGenreId) {
+
             movie_list.push(movie)
           }
         }
       }
+      console.log(movie_list)
       return movie_list
     }
-  }
+  },
+
 }
 </script>
 

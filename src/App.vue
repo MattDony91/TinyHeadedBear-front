@@ -2,7 +2,7 @@
   <div id="app">
     
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <router-link class="navbar-brand" to="/">작은 대가리 곰</router-link>
+      <router-link class="navbar-brand" to="/" ><i class="fas fa-paw ml-4" style="height:30px;"></i></router-link>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -23,9 +23,13 @@
           </div>
         </ul>
         
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <form class="w-full max-w-sm">
+          <div class="flex items-center border-b border-b-2 border-teal-500 py-2">
+            <input class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="" aria-label="Full name">
+            <button class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded" type="button">
+              Search
+            </button>
+          </div>
         </form>
       </div>
     </nav>
@@ -33,16 +37,18 @@
     <div class="container">
       <router-view/>
     </div>
-    <!-- <Home :check="isAuthenticated"/> -->
+  <go-top></go-top>
+
   </div>
 </template>
+
 <script>
-// import Login from './views/Login.vue'
-// import Home from './views/Home.vue'
+import GoTop from '@inotom/vue-go-top';
+
 export default {
   name: 'App',
   components:{
-    // Home,
+    GoTop
   },
   data: function(){
     return {
